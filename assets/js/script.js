@@ -1,39 +1,70 @@
+const weatherService = new WeatherService("2813c6f3fe791543a33abe4655abc6ef");
+let cities = [];
+
 document.addEventListener("DOMContentLoaded", function () {
   main();
 });
-let cities = [];
 
 function main() {
-  const weatherService = new WeatherService("2813c6f3fe791543a33abe4655abc6ef");
   //getStarterCities(weatherService);
   cities = JSON.parse(localStorage.getItem("cities")) ?? [];
   printCities();
 
-  document.getElementById("confirmSearch").onclick = (e) => {
-    const city = document.getElementById("citySearch").value;
-    weatherService.getCityByName(city).then((resp) => {
-      resp["id"] = cities[cities.length - 1]
-        ? cities[cities.length - 1].id + 1
-        : 0;
-      cities.push(resp);
-      localStorage.setItem("cities", JSON.stringify(cities));
-      printCities();
-    });
-  };
+  document.getElementById("confirmSearch").onclick = confirmSearch;
 
-  document.getElementById("weather").onclick = (e) => {
-    const attribute = e.target.getAttribute("data-city");
-    if (!attribute) {
-      return;
-    }
+  document.getElementById("weather").onclick = handleDelete;
 
-    const idsOnly = cities.map((city) => city.id);
-    const deleteIndex = idsOnly.indexOf(parseInt(attribute));
+  for (var item in document.getElementsByClassName("cityDetails")) {
+    item.onclick = (e) => {
+      console.log(e);
+    };
+  }
+  //   .forEach(
+  //   (elem) =>
+  //     (elem.onclick = (e) => {
+  //       console.log(e.target);
+  //     })
+  // );
+}
 
-    cities.splice(deleteIndex, 1);
+function confirmSearch() {
+  const city = document.getElementById("citySearch").value;
+
+  if (cities.map((city) => city.name).indexOf(city) !== -1) {
+    return;
+  }
+
+  weatherService.getCityByName(city).then((resp) => {
+    resp["id"] = cities[cities.length - 1]
+      ? cities[cities.length - 1].id + 1
+      : 0;
+    cities.push(resp);
     localStorage.setItem("cities", JSON.stringify(cities));
     printCities();
-  };
+  });
+}
+
+function handleDelete(e) {
+  const attribute = e.target.getAttribute("data-city");
+  if (!attribute) {
+    return;
+  }
+
+  const idsOnly = cities.map((city) => city.id);
+  const deleteIndex = idsOnly.indexOf(parseInt(attribute));
+
+  cities.splice(deleteIndex, 1);
+  localStorage.setItem("cities", JSON.stringify(cities));
+  printCities();
+}
+
+function convertTemp(temp) {
+  return (temp - 273.15).toFixed(1) + " ℃";
+}
+
+function unixToHourMinute(unixTime) {
+  var date = new Date(unixTime * 1000);
+  return date.getHours() + ":" + date.getMinutes();
 }
 
 function printCities() {
@@ -86,11 +117,10 @@ function printCities() {
                 <p class="cat">Windspeed:</p>
                 <p>${city.wind.speed} m/s</p>
               </li>
-              <li>
-                <p class="cat">Id:</p>
-                <p>${city.id}</p>
-              </li>
             </ul>
+            <button class="cityDetails" data-details="${
+              city.name
+            }">Details</button>
           </div>
           <button id="deletecity" class="deletecity" >
             <img height="18px" src="assets/img/cross_error.svg" alt="delete city" data-city="${
@@ -99,13 +129,4 @@ function printCities() {
           </button>
         </div>`;
   });
-}
-
-function convertTemp(temp) {
-  return (temp - 273.15).toFixed(1) + " ℃";
-}
-
-function unixToHourMinute(unixTime) {
-  var date = new Date(unixTime * 1000);
-  return date.getHours() + ":" + date.getMinutes();
 }
