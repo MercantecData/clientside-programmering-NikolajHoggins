@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Document</title>
+    <title>Weather!</title>
   </head>
   <body>
     <header class="header">
@@ -25,31 +25,15 @@
           <li>Stupid easy</li>
         </ul>
       </div>
-      <div class="right"></div>
-    </div>
-    <div class="city-container" id="weather">
-      <div class="city">
-        <div
-          class="header"
-          style="
-            background-image: url(http://openweathermap.org/img/wn/03d@2x.png);
-          "
-        >
-          <h2>Viborg</h2>
-        </div>
-
-        <div class="data">
-          <ul class="city-data">
-            <li>
-              <p class="cat">Country:</p>
-              <p>DK</p>
-            </li>
-          </ul>
-        </div>
+      <div class="right">
+        <p class="header-text">Enter you city</p>
+        <input id="citySearch" type="text" placeholder="London..." />
+        <button id="confirmSearch">Search city</button>
       </div>
     </div>
+    <div class="city-container" id="weather"></div>
 
-    <footer class="footer">Hello :-)</footer>
+    <footer class="footer">Hello :-) I am læ footer</footer>
     <script src="assets/js/services/WeatherService.js"></script>
     <script src="assets/js/script.js"></script>
   </body>

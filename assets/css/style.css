@@ -46,8 +46,19 @@ header.header {
   padding-left: 15%;
 }
 
+.hero .right {
+  padding-top: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding-right: 15%;
+  width: 50%;
+  background-color: #3498db;
+}
+
 .hero .left h1 {
-  text-align: center;
+  text-align: left;
   width: 100%;
 }
 
@@ -59,24 +70,62 @@ header.header {
 .hero .left ul li {
   margin-bottom: 12px;
 }
-.hero .right {
-  width: 50%;
-  background-color: #3498db;
+
+.hero .right .header-text {
+  font-size: 32px;
+  text-align: right;
+  width: 100%;
+  font-weight: bold;
+}
+.hero .right input {
+  text-align: right;
+  width: 80%;
+  border: none;
+  margin: 20px 0;
+  padding: 0 1rem;
+  height: 42px;
+  text-align: left;
+  font-size: 24px;
+}
+
+.hero .right button {
+  height: 42px;
+  padding: 0 20px;
+  border: none;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  color: #5b77e6;
+
+  background-color: #ededed;
+  -webkit-box-shadow: 0px 0px 15px -2px #3857d5;
+  -moz-box-shadow: 0px 0px 15px -2px #3857d5;
+  box-shadow: 0px 0px 15px -2px #3857d5;
+}
+
+.hero .right button:hover {
+  background-color: #fff;
+
+  -webkit-box-shadow: 0px 0px 15px 2px #3857d5;
+  -moz-box-shadow: 0px 0px 15px 2px #3857d5;
+  box-shadow: 0px 0px 15px 2px #3857d5;
 }
 
 .city-container {
   width: 100%;
   height: 100%;
   padding: 0 10%;
-  padding-top: 24px;
+  padding-top: 76px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
 }
 .city-container .city {
   background-color: white;
   border-radius: 5px;
-
+  position: relative;
+  margin: 40px;
   height: 100%;
   width: 350px;
   -webkit-box-shadow: 0px 0px 15px -6px rgba(120, 120, 120, 1);
@@ -95,6 +144,14 @@ header.header {
   background-position-y: -20px;
 }
 
+.city .deletecity {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
 .city .data {
   padding: 20px;
 }
@@ -105,7 +162,8 @@ header.header {
 
 .city .city-data li {
   display: flex;
-  padding-bottom: 10px;
+  align-items: center;
+  padding-bottom: 16px;
 }
 
 .city .city-data .cat {
