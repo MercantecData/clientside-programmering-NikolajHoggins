@@ -3,12 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <div class="container">
-      <h1 class="hello">Hello</h1>
+    <header class="header">
+      <img
+        src="assets/img/logo.png"
+        class="logo"
+        height="56px"
+        alt="merc logo"
+      />
+      <nav></nav>
+    </header>
+    <div class="hero">
+      <div class="left">
+        <h1>Get your local weather</h1>
+        <ul>
+          <li>Free to use</li>
+          <li>Lightning fast</li>
+          <li>Stupid easy</li>
+        </ul>
+      </div>
+      <div class="right"></div>
     </div>
+    <div class="city-container" id="weather">
+      <div class="city">
+        <div
+          class="header"
+          style="
+            background-image: url(http://openweathermap.org/img/wn/03d@2x.png);
+          "
+        >
+          <h2>Viborg</h2>
+        </div>
+
+        <div class="data">
+          <ul class="city-data">
+            <li>
+              <p class="cat">Country:</p>
+              <p>DK</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">Hello :-)</footer>
+    <script src="assets/js/services/WeatherService.js"></script>
+    <script src="assets/js/script.js"></script>
   </body>
 </html>
