@@ -8,6 +8,9 @@
 body {
   background-color: white;
 }
+.error-text {
+  color: red;
+}
 
 header.header {
   height: 112px;
@@ -175,4 +178,25 @@ header.header {
   height: 124px;
   margin-top: 124px;
   background-color: #52a5dd;
+}
+
+.cityDetails {
+  height: 36px;
+  padding: 0 1rem;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #3498db;
+  border: none;
+}
+@media only screen and (max-width: 765px) {
+  .hero {
+    flex-direction: column;
+  }
+  .hero .left,
+  .hero .right {
+    width: 100%;
+    height: 640px;
+  }
 }

@@ -8,12 +8,15 @@
   </head>
   <body>
     <header class="header">
-      <img
-        src="assets/img/logo.png"
-        class="logo"
-        height="56px"
-        alt="merc logo"
-      />
+      <a href="./">
+        <img
+          src="assets/img/logo.png"
+          class="logo"
+          height="56px"
+          alt="merc logo"
+        />
+      </a>
+
       <nav></nav>
     </header>
     <div class="hero">
@@ -28,6 +31,7 @@
       <div class="right">
         <p class="header-text">Enter you city</p>
         <input id="citySearch" type="text" placeholder="London..." />
+        <p id="errorText" class="error-text"></p>
         <button id="confirmSearch">Search city</button>
       </div>
     </div>

@@ -12,19 +12,7 @@ function main() {
 
   document.getElementById("confirmSearch").onclick = confirmSearch;
 
-  document.getElementById("weather").onclick = handleDelete;
-
-  for (var item in document.getElementsByClassName("cityDetails")) {
-    item.onclick = (e) => {
-      console.log(e);
-    };
-  }
-  //   .forEach(
-  //   (elem) =>
-  //     (elem.onclick = (e) => {
-  //       console.log(e.target);
-  //     })
-  // );
+  document.getElementById("weather").onclick = handleCityClick;
 }
 
 function confirmSearch() {
@@ -35,6 +23,10 @@ function confirmSearch() {
   }
 
   weatherService.getCityByName(city).then((resp) => {
+    if (resp["cod"] == 404) {
+      document.getElementById("errorText").innerText = resp["message"];
+      return;
+    }
     resp["id"] = cities[cities.length - 1]
       ? cities[cities.length - 1].id + 1
       : 0;
@@ -44,18 +36,27 @@ function confirmSearch() {
   });
 }
 
-function handleDelete(e) {
+function handleCityClick(e) {
   const attribute = e.target.getAttribute("data-city");
+  const type = e.target.getAttribute("data-type");
+
   if (!attribute) {
+    return;
+  }
+  if (!type) {
     return;
   }
 
   const idsOnly = cities.map((city) => city.id);
-  const deleteIndex = idsOnly.indexOf(parseInt(attribute));
+  const selectedIndex = idsOnly.indexOf(parseInt(attribute));
 
-  cities.splice(deleteIndex, 1);
-  localStorage.setItem("cities", JSON.stringify(cities));
-  printCities();
+  if (type === "delete") {
+    cities.splice(selectedIndex, 1);
+    localStorage.setItem("cities", JSON.stringify(cities));
+    printCities();
+  } else if (type === "details") {
+    window.location.href = `/details.html?lon=${cities[selectedIndex].coord.lon}&lat=${cities[selectedIndex].coord.lat}&name=${cities[selectedIndex].name}`;
+  }
 }
 
 function convertTemp(temp) {
@@ -95,11 +96,11 @@ function printCities() {
               </li>
               <li>
                 <p class="cat">Temperature:</p>
-                <p>${convertTemp(city.main.temp)}</p>
+                <p>${city.main.temp}  &deg;C</p>
               </li>
               <li>
                 <p class="cat">Temperature feels:</p>
-                <p>${convertTemp(city.main.feels_like)}</p>
+                <p>${city.main.feels_like}  &deg;C</p>
               </li>
               <li>
                 <p class="cat">Sunrise:</p>
@@ -110,20 +111,16 @@ function printCities() {
                 <p>${unixToHourMinute(city.sys.sunset)}</p>
               </li>
               <li>
-                <p class="cat">Temperature feels:</p>
-                <p>${convertTemp(city.main.feels_like)}</p>
-              </li>
-              <li>
                 <p class="cat">Windspeed:</p>
                 <p>${city.wind.speed} m/s</p>
               </li>
             </ul>
-            <button class="cityDetails" data-details="${
-              city.name
+            <button class="cityDetails" data-type="details" data-city="${
+              city.id
             }">Details</button>
           </div>
           <button id="deletecity" class="deletecity" >
-            <img height="18px" src="assets/img/cross_error.svg" alt="delete city" data-city="${
+            <img height="18px" src="assets/img/cross_error.svg" alt="delete city" data-type="delete" data-city="${
               city.id
             }" />
           </button>
