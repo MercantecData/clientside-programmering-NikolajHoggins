@@ -8,9 +8,20 @@
     <title>Weather!</title>
   </head>
   <body>
-    <include src="header.html"></include>
+    <header class="header">
+      <a href="./">
+        <img
+          src="assets/img/logo.png"
+          class="logo"
+          height="56px"
+          alt="merc logo"
+        />
+      </a>
+      <nav></nav>
+    </header>
 
     <div class="content">
+      <a class="back" href="./"><img src="assets/img/arrow.png" />back</a>
       <h1 class="city-name" id="city"></h1>
       <div class="day-container" id="dayContainer"></div>
     </div>
