@@ -27,14 +27,20 @@
     <div class="content">
       <a class="back" href="./"><img src="assets/img/arrow.png" />back</a>
       <h1 class="city-name" id="city">List over top searched cities</h1>
-      <div class="sort">
-        <span>Sort by </span>
-        <select name="Searched Count" id="sort">
-          <option value="count">Searched amount</option>
-        </select>
-        <div class="direction" id="sorting-direction">
-          <span>Descending</span>
-          <img height="14px" src="/assets/img/arrow.png" />
+      <div class="options">
+        <div class="sort">
+          <span>Sort by </span>
+          <select name="Searched Count" id="sort">
+            <option value="count">Searched amount</option>
+          </select>
+          <div class="direction" id="sorting-direction">
+            <span>Descending</span>
+            <img height="14px" src="/assets/img/arrow.png" />
+          </div>
+        </div>
+
+        <div class="search">
+          <input type="text" id="list-search" />
         </div>
       </div>
       <div class="city-container top-container" id="top-list"></div>

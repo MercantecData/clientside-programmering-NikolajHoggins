@@ -2,6 +2,7 @@ const backendService = new BackendService("jesper");
 const weatherService = new WeatherService("2813c6f3fe791543a33abe4655abc6ef");
 let topList = [];
 let cities = [];
+let search = "";
 let sortingDirection = 1;
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -14,21 +15,33 @@ async function main() {
     printCities(cities);
   };
 
+  document.getElementById("list-search").onkeyup = (e) => {
+    search = e.target.value;
+    printCities();
+  };
+
+  getList();
+}
+
+function getList() {
   backendService.getRequestedCities().then(async (resp) => {
     await resp.forEach((res) => {
       weatherService.getCityByName(res.city).then((value) => {
         value["count"] = res.count;
         cities.push(value);
-        printCities(cities);
+        printCities();
       });
     });
-    console.log(cities);
   });
 }
 
-function printCities(cities) {
+function printCities() {
   document.getElementById("top-list").innerHTML = "";
-  sortCities(cities)?.forEach((city) => {
+  const filteredCities = cities.filter((city) => {
+    return city.name.includes(search);
+  });
+
+  sortCities(filteredCities)?.forEach((city) => {
     document.getElementById("top-list").innerHTML += `<div class="city">
           <div
             class="header"

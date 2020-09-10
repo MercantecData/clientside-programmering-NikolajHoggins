@@ -5,19 +5,18 @@ class WeatherService {
   }
 
   async getCityByName(cityName) {
-    //Check localstorage if exists and not expired.
-    let cities = JSON.parse(localStorage.getItem("cached_cities")) ?? [];
-    //const city = cities.find((cached_city) => cached_city.name === cityName);
-    const cityIndex = cities
-      .map((cached_city) => cached_city.name)
-      .indexOf(cityName);
-    if (cityIndex !== -1) {
-      if (Date.now() > cities[cityIndex].expiry) {
+    // Check localstorage if exists and not expired.
+    // I now directly store the city in localStorage.
+    // I would'nt call this an optimal solution, but it fixes async problems from the earlier solution
+    let cached_city = JSON.parse(localStorage.getItem(cityName));
+
+    if (cached_city) {
+      if (Date.now() > cached_city.expiry) {
         console.log("City expired, fetch new.");
-        cities.splice(cityIndex, 1);
+        localStorage.removeItem(cityName);
       } else {
         console.log(`Returned ${cityName} from cache`);
-        return cities[cityIndex];
+        return cached_city;
       }
     }
 
@@ -31,9 +30,8 @@ class WeatherService {
         const minutes = 0.2;
         //Take minutes and mulitply with 60000 which is a minute in unix time.
         val["expiry"] = Date.now() + minutes * 60000;
-        cities = JSON.parse(localStorage.getItem("cached_cities")) ?? [];
-        cities.push(val);
-        localStorage.setItem("cached_cities", JSON.stringify(cities));
+
+        localStorage.setItem(cityName, JSON.stringify(val));
         return val;
       });
   }

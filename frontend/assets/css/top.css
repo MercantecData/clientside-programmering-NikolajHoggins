@@ -1,7 +1,12 @@
 .top-container {
   padding-top: 0;
 }
-
+.options {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 15%;
+}
 .sort {
   display: flex;
   align-items: center;
