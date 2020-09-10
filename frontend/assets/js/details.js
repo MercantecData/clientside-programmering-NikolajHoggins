@@ -45,7 +45,7 @@ function printDays(days) {
           <div
             class="header"
             style="
-              background-image: url(http://openweathermap.org/img/wn/${
+              background-image: url(https://openweathermap.org/img/wn/${
                 day.weather[0].icon
               }@2x.png);
             "

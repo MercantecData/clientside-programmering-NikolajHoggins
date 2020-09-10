@@ -3,8 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/details.css" />
+    <link rel="stylesheet" href="assets/css/top.css" />
+    <link rel="shortcut icon" href="#" />
+
     <title>Weather!</title>
   </head>
   <body>
@@ -22,11 +26,22 @@
 
     <div class="content">
       <a class="back" href="./"><img src="assets/img/arrow.png" />back</a>
-      <h1 class="city-name" id="city"></h1>
-      <div class="day-container" id="dayContainer"></div>
+      <h1 class="city-name" id="city">List over top searched cities</h1>
+      <div class="sort">
+        <span>Sort by </span>
+        <select name="Searched Count" id="sort">
+          <option value="count">Searched amount</option>
+        </select>
+        <div class="direction" id="sorting-direction">
+          <span>Descending</span>
+          <img height="14px" src="/assets/img/arrow.png" />
+        </div>
+      </div>
+      <div class="city-container top-container" id="top-list"></div>
     </div>
     <footer class="footer">Hello :-) I am læ footer</footer>
     <script src="assets/js/services/WeatherService.js"></script>
-    <script src="assets/js/details.js"></script>
+    <script src="assets/js/services/BackendService.js"></script>
+    <script src="assets/js/top.js"></script>
   </body>
 </html>

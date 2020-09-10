@@ -1,8 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const cors = require("cors");
 const db = require("./database.js").con;
 require("dotenv").config();
+
+app.use(cors());
 
 //We put "/" at the top, to allow access without authorization key
 app.get("/", (req, res) => {

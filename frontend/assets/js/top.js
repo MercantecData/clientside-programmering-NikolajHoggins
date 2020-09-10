@@ -1,73 +1,35 @@
+const backendService = new BackendService("jesper");
 const weatherService = new WeatherService("2813c6f3fe791543a33abe4655abc6ef");
+let topList = [];
 let cities = [];
+let sortingDirection = 1;
+
 document.addEventListener("DOMContentLoaded", function () {
   main();
 });
 
-function main() {
-  //getStarterCities(weatherService);
-  cities = JSON.parse(localStorage.getItem("cities")) ?? [];
-  printCities();
+async function main() {
+  document.getElementById("sorting-direction").onclick = (e) => {
+    sortingDirection *= -1;
+    printCities(cities);
+  };
 
-  document.getElementById("confirmSearch").onclick = confirmSearch;
-
-  document.getElementById("weather").onclick = handleCityClick;
-}
-
-function confirmSearch() {
-  const city = document.getElementById("citySearch").value;
-
-  if (cities.map((city) => city.name).indexOf(city) !== -1) {
-    return;
-  }
-
-  weatherService.getCityByName(city).then((resp) => {
-    if (resp["cod"] == 404) {
-      document.getElementById("errorText").innerText = resp["message"];
-      return;
-    }
-    resp["id"] = cities[cities.length - 1]
-      ? cities[cities.length - 1].id + 1
-      : 0;
-    cities.push(resp);
-    localStorage.setItem("cities", JSON.stringify(cities));
-    printCities();
+  backendService.getRequestedCities().then(async (resp) => {
+    await resp.forEach((res) => {
+      weatherService.getCityByName(res.city).then((value) => {
+        value["count"] = res.count;
+        cities.push(value);
+        printCities(cities);
+      });
+    });
+    console.log(cities);
   });
 }
 
-function handleCityClick(e) {
-  const attribute = e.target.getAttribute("data-city");
-  const type = e.target.getAttribute("data-type");
-
-  if (!attribute) {
-    return;
-  }
-  if (!type) {
-    return;
-  }
-
-  const idsOnly = cities.map((city) => city.id);
-  const selectedIndex = idsOnly.indexOf(parseInt(attribute));
-
-  if (type === "delete") {
-    cities.splice(selectedIndex, 1);
-    localStorage.setItem("cities", JSON.stringify(cities));
-    printCities();
-  } else if (type === "details") {
-    window.location.href = `/details.html?lon=${cities[selectedIndex].coord.lon}&lat=${cities[selectedIndex].coord.lat}&name=${cities[selectedIndex].name}`;
-  }
-}
-
-function unixToHourMinute(unixTime) {
-  var date = new Date(unixTime * 1000);
-  return date.getHours() + ":" + date.getMinutes();
-}
-
-function printCities() {
-  document.getElementById("weather").innerHTML = "";
-
-  cities?.forEach((city) => {
-    document.getElementById("weather").innerHTML += `<div class="city">
+function printCities(cities) {
+  document.getElementById("top-list").innerHTML = "";
+  sortCities(cities)?.forEach((city) => {
+    document.getElementById("top-list").innerHTML += `<div class="city">
           <div
             class="header"
             style="
@@ -81,6 +43,10 @@ function printCities() {
   
           <div class="data">
             <ul class="city-data">
+              <li>
+                <p class="cat">Searched:</p>
+                <p>${city.count} times</p>
+              </li>
               <li>
                 <p class="cat">Country:</p>
                 <p>${city.sys.country}</p>
@@ -121,4 +87,23 @@ function printCities() {
           </button>
         </div>`;
   });
+}
+
+function unixToHourMinute(unixTime) {
+  var date = new Date(unixTime * 1000);
+  return date.getHours() + ":" + date.getMinutes();
+}
+
+function sortCities(cities) {
+  return cities.sort(sortByCount);
+}
+
+function sortByCount(a, b) {
+  if (a.count < b.count) {
+    return 1 * sortingDirection;
+  }
+  if (a.count > b.count) {
+    return -1 * sortingDirection;
+  }
+  return 0;
 }
