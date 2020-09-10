@@ -12,6 +12,12 @@ document.addEventListener("DOMContentLoaded", function () {
 async function main() {
   document.getElementById("sorting-direction").onclick = (e) => {
     sortingDirection *= -1;
+    document.getElementById("direction-text").innerText =
+      sortingDirection === -1 ? "Ascending" : "Descending";
+
+    document.getElementById("direction-img").style = `transform: rotate(${
+      sortingDirection === -1 ? "0" : "180"
+    })`;
     printCities(cities);
   };
 

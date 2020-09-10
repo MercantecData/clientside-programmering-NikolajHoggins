@@ -26,7 +26,7 @@
 
     <div class="content">
       <a class="back" href="./"><img src="assets/img/arrow.png" />back</a>
-      <h1 class="city-name" id="city">List over top searched cities</h1>
+      <h1 class="city-name" id="city">List of top searched cities</h1>
       <div class="options">
         <div class="sort">
           <span>Sort by </span>
@@ -34,8 +34,13 @@
             <option value="count">Searched amount</option>
           </select>
           <div class="direction" id="sorting-direction">
-            <span>Descending</span>
-            <img height="14px" src="/assets/img/arrow.png" />
+            <span id="direction-text">Descending</span>
+            <img
+              id="direction-img"
+              height="14px"
+              style="transform: rotate(180deg)"
+              src="/assets/img/arrow.png"
+            />
           </div>
         </div>
 

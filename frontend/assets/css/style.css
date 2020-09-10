@@ -91,27 +91,35 @@ header.header {
   font-size: 24px;
 }
 
-.hero .right button {
+.hero .right button,
+.button {
   height: 42px;
   padding: 0 20px;
   border: none;
   font-weight: bold;
+  display: flex;
+  align-items: center;
   font-size: 20px;
   cursor: pointer;
   color: #5b77e6;
-
+  text-decoration: none;
   background-color: #ededed;
   -webkit-box-shadow: 0px 0px 15px -2px #3857d5;
   -moz-box-shadow: 0px 0px 15px -2px #3857d5;
   box-shadow: 0px 0px 15px -2px #3857d5;
 }
 
-.hero .right button:hover {
+.hero .right button:hover,
+.button:hover {
   background-color: #fff;
 
   -webkit-box-shadow: 0px 0px 15px 2px #3857d5;
   -moz-box-shadow: 0px 0px 15px 2px #3857d5;
   box-shadow: 0px 0px 15px 2px #3857d5;
+}
+
+.hero .right .button {
+  margin-top: 56px;
 }
 
 .city-container {
